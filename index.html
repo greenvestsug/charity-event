@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Vests Initiative - Charity Event</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #10b981;
+            --primary-dark: #059669;
+            --primary-light: #d1fae5;
+            --secondary: #0ea5e9;
+            --accent: #f59e0b;
+            --light: #f6faf7;
+            --dark: #0b1f17;
+            --muted: #5f7b73;
+            --card-bg: #ffffff;
+            --border: #e3efe7;
+            --shadow: 0 10px 24px rgba(9,60,45,.10);
+            --radius: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .giving-back-banner {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 35px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .giving-back-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(180deg); }
+        }
+        
+        .giving-back-banner h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        .giving-back-banner p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .gvi-logo {
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .organization {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        /* Countdown Styles */
+        .countdown-container {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: var(--radius);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .countdown-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .countdown-text {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(9,60,45,.15);
+        }
+        
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-title i {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 1.4rem;
+            color: var(--dark);
+        }
+        
+        .event-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .detail-item {
+            margin-bottom: 15px;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #0284c7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(14, 165, 233, 0.4);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-accent:hover {
+            background: #d97706;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(245, 158, 11, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-calendar {
+            background: #4285f4;
+            color: white;
+        }
+        
+        .btn-calendar:hover {
+            background: #3367d6;
+            transform: translateY(-2px);
+        }
+        
+        .activities-list, .donation-items-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .activities-list li, .donation-items-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .activities-list li:last-child, .donation-items-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .activities-list i, .donation-items-list i {
+            color: var(--primary);
+            margin-top: 3px;
+        }
+        
+        /* Donation Items Grid */
+        .donation-items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .donation-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px 15px;
+            background: var(--primary-light);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+        
+        .donation-item:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .donation-item:hover i,
+        .donation-item:hover span {
+            color: white;
+        }
+        
+        .donation-item i {
+            font-size: 2.2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+            transition: color 0.3s ease;
+        }
+        
+        .donation-item span {
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .payment-method {
+            padding: 25px 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        
+        .payment-method.airtel {
+            border-top: 4px solid #e20000;
+        }
+        
+        .payment-method.mtn {
+            border-top: 4px solid #ffcc00;
+        }
+        
+        .payment-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .payment-method.airtel .payment-icon {
+            color: #e20000;
+        }
+        
+        .payment-method.mtn .payment-icon {
+            color: #ffcc00;
+        }
+        
+        .payment-method h3 {
+            color: var(--dark);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+        
+        .payment-details {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+        }
+        
+        .payment-note {
+            font-size: 0.85rem;
+            color: var(--muted);
+            font-style: italic;
+            margin-top: 10px;
+        }
+        
+        .contacts-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        
+        .contacts-table th, .contacts-table td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .contacts-table th {
+            font-weight: 600;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .action-buttons .btn {
+            flex: 1;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .giving-back-banner h1 {
+                font-size: 1.8rem;
+            }
+            
+            .countdown-container {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin: 15px auto;
+                max-width: 200px;
+            }
+            
+            .countdown-number {
+                font-size: 2rem;
+            }
+            
+            .event-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .donation-items-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 12px;
+            }
+            
+            .payment-methods {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .contacts-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 20px 15px;
+            }
+            
+            .giving-back-banner {
+                padding: 25px 15px;
+            }
+            
+            .giving-back-banner h1 {
+                font-size: 1.6rem;
+            }
+            
+            .countdown-container {
+                padding: 10px;
+            }
+            
+            .countdown-number {
+                font-size: 1.8rem;
+            }
+            
+            .donation-items-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .donation-item, .payment-method {
+                padding: 15px;
+            }
+            
+            .donation-item i {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Giving Back Banner -->
+        <div class="giving-back-banner">
+            <h1>WE ARE GIVING BACK TO THE COMMUNITY!</h1>
+            <p>Supporting Cancer Patients at UCI Care Home, Mulago Hospital</p>
+        </div>
+        
+        <header>
+            <div class="gvi-logo">GVI</div>
+            <div class="organization">Green Vests Initiative</div>
+            <h1>Charity Event for Cancer Patients</h1>
+            <p class="subtitle">UCI Care Home, Mulago Hospital | November 29, 2025 | 9:00 AM</p>
+            
+            <!-- Countdown Timer -->
+            <div class="countdown-container">
+                <div class="countdown-label">Days to go</div>
+                <div class="countdown-number" id="days-to-go">0</div>
+                <div class="countdown-text" id="countdown-text">until event</div>
+            </div>
+        </header>
+        
+        <!-- ========== EVENT DETAILS SECTION ========== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-calendar-alt"></i>
+                <h2>Charity Event Details</h2>
+            </div>
+            
+            <div class="event-details">
+                <div class="detail-item">
+                    <div class="detail-label">Date</div>
+                    <div class="detail-value">29/11/2025 (Saturday)</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Time</div>
+                    <div class="detail-value">9:00 AM</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Location</div>
+                    <div class="detail-value">UCI Care Home, Mulago Hospital</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Type of Event</div>
+                    <div class="detail-value">Charity & Donation Drive</div>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Directions</div>
+                    <a href="https://www.google.com/maps/dir/0.3554964,32.5938274/8HXM%2B22M+Uganda+Cancer+Institute,+7a+Upper+Mulago+Hill+Rd,+Kampala/@0.3421363,32.578106,356m/data=!3m1!1e3!4m9!4m8!1m1!4e1!1m5!1m1!1s0x177dbb06669f02ef:0xbebc454c5ca88554!2m2!1d32.5778904!2d0.3414243?entry=ttu&g_ep=EgoyMDI1MTAyOS4xIKXMDSoASAFQAw%3D%3D" class="btn btn-outline" target="_blank">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Open in Google Maps
+                    </a>
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-label">Add to Calendar</div>
+                    <a href="#" class="btn btn-calendar" id="add-to-calendar">
+                        <i class="fas fa-calendar-plus"></i>
+                        Add to Calendar
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ========== ACTIVITIES SECTION ========== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-tasks"></i>
+                <h2>Event Activities</h2>
+            </div>
+            
+            <ul class="activities-list">
+                <li>
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <div>Distribution of donated items to cancer patients</div>
+                </li>
+                <li>
+                    <i class="fas fa-users"></i>
+                    <div>Spending time with patients and offering emotional support</div>
+                </li>
+                <li>
+                    <i class="fas fa-pray"></i>
+                    <div>Prayer and encouragement sessions</div>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- ========== DONATION ITEMS SECTION ========== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-star"></i>
+                <h2>Items Needed for Donation</h2>
+            </div>
+            
+            <div class="donation-items-grid">
+                <div class="donation-item">
+                    <i class="fas fa-pump-soap"></i>
+                    <span>Detergents (Jik, Liquid Soap, Bar Soap)</span>
+                </div>
+                <div class="donation-item">
+                    <i class="fas fa-baby"></i>
+                    <span>Adult Diapers & Sanitary Pads</span>
+                </div>
+                <div class="donation-item">
+                    <i class="fas fa-toilet-paper"></i>
+                    <span>Toilet Paper</span>
+                </div>
+                <div class="donation-item">
+                    <i class="fas fa-tshirt"></i>
+                    <span>Clothes, Bed Sheets, Blankets & Mattresses</span>
+                </div>
+                <div class="donation-item">
+                    <i class="fas fa-broom"></i>
+                    <span>Scrubbing Brushes, Hard Brooms & Squeezers</span>
+                </div>
+                <div class="donation-item">
+                    <i class="fas fa-utensils"></i>
+                    <span>Food Items (Rice, Sugar, Tea Leaves, Beans, Posho)</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ========== PAYMENT METHODS SECTION ========== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-money-bill-wave"></i>
+                <h2>Support Through Mobile Money</h2>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-method airtel">
+                    <div class="payment-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Airtel Money</h3>
+                    <div class="payment-details">Merchant ID: 676791</div>
+                    <div class="payment-note">Type reason for your giving (e.g., Sugar, Detergent)</div>
+                </div>
+                
+                <div class="payment-method mtn">
+                    <div class="payment-icon">
+                        <i class="fas fa-sim-card"></i>
+                    </div>
+                    <h3>MTN Mobile Money</h3>
+                    <div class="payment-details">0786319662 (Nabwire Grace)</div>
+                    <div class="payment-note">Type reason for your giving (e.g., Sugar, Detergent)</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ========== CONTACTS SECTION ========== -->
+        <div class="card">
+            <div class="card-title">
+                <i class="fas fa-address-book"></i>
+                <h2>Contact Persons</h2>
+            </div>
+            
+            <table class="contacts-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Contact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Suka Isaac</td>
+                        <td>Operations Lead</td>
+                        <td>+256 751 048 171</td>
+                    </tr>
+                    <tr>
+                        <td>Phillip Jjingo</td>
+                        <td>Field Lead</td>
+                        <td>+256 752 500 849</td>
+                    </tr>
+                    <tr>
+                        <td>Victor Brenda</td>
+                        <td>Communications Lead</td>
+                        <td>+256 753 238 901</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- ========== ACTION BUTTONS ========== -->
+        <div class="action-buttons">
+            <a href="tel:+256753238901" class="btn btn-primary">
+                <i class="fas fa-phone-alt"></i>
+                Call Comms Lead
+            </a>
+            <a href="https://wa.me/256753238901" class="btn btn-secondary" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                WhatsApp Comms Lead
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ========== COUNTDOWN CALCULATION ==========
+        function calculateDaysUntilEvent() {
+            // Set the event date (format: YYYY, MM-1, DD)
+            const eventDate = new Date(2025, 10, 29); // November 29, 2025 (Note: months are 0-indexed)
+            
+            // Get current date
+            const currentDate = new Date();
+            
+            // Calculate the difference in time (milliseconds)
+            const timeDifference = eventDate.getTime() - currentDate.getTime();
+            
+            // Convert milliseconds to days
+            const daysDifference = Math.ceil(timeDifference / (1000 * 60 * 60 * 24));
+            
+            return daysDifference;
+        }
+        
+        function updateCountdown() {
+            const daysToGo = calculateDaysUntilEvent();
+            const daysElement = document.getElementById('days-to-go');
+            const textElement = document.getElementById('countdown-text');
+            
+            if (daysToGo > 0) {
+                daysElement.textContent = daysToGo;
+                textElement.textContent = 'days until event';
+            } else if (daysToGo === 0) {
+                daysElement.textContent = '0';
+                textElement.textContent = 'Event is today!';
+            } else {
+                daysElement.textContent = Math.abs(daysToGo);
+                textElement.textContent = 'days since event';
+            }
+        }
+        
+        // ========== CALENDAR INTEGRATION ==========
+        function generateCalendarLink() {
+            // Event details
+            const eventTitle = "Green Vests Initiative - Charity Event for Cancer Patients";
+            const eventDescription = "Join us for a charity event at UCI Care Home, Mulago Hospital. We'll be donating items and spending time with cancer patients. Your support makes a difference!";
+            const eventLocation = "UCI Care Home, Mulago Hospital";
+            const startDate = "20251129T090000"; // YYYYMMDDTHHMMSS - 9:00 AM
+            const endDate = "20251129T120000";   // 12:00 PM (3-hour event: 9 AM - 12 PM)
+            
+            // Google Calendar URL
+            const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(eventTitle)}&dates=${startDate}/${endDate}&details=${encodeURIComponent(eventDescription)}&location=${encodeURIComponent(eventLocation)}&sf=true&output=xml`;
+            
+            // iCalendar download (for other calendar apps)
+            const icsContent = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'BEGIN:VEVENT',
+                `SUMMARY:${eventTitle}`,
+                `DESCRIPTION:${eventDescription}`,
+                `LOCATION:${eventLocation}`,
+                `DTSTART:${startDate.replace(/[-:]/g, '')}`,
+                `DTEND:${endDate.replace(/[-:]/g, '')}`,
+                'BEGIN:VALARM',
+                'TRIGGER:-P14D',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Reminder - Event in 2 weeks',
+                'END:VALARM',
+                'BEGIN:VALARM',
+                'TRIGGER:-P7D',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Reminder - Event in 1 week',
+                'END:VALARM',
+                'BEGIN:VALARM',
+                'TRIGGER:-P3D',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Reminder - Event in 3 days',
+                'END:VALARM',
+                'BEGIN:VALARM',
+                'TRIGGER:-P1D',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Reminder - Event tomorrow',
+                'END:VALARM',
+                'BEGIN:VALARM',
+                'TRIGGER:-PT2H',
+                'ACTION:DISPLAY',
+                'DESCRIPTION:Reminder - Event today at 9:00 AM',
+                'END:VALARM',
+                'END:VEVENT',
+                'END:VCALENDAR'
+            ].join('\n');
+            
+            // Create and download ICS file
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const icsUrl = URL.createObjectURL(blob);
+            
+            return {
+                google: googleCalendarUrl,
+                ics: icsUrl
+            };
+        }
+        
+        function setupCalendarButton() {
+            const calendarButton = document.getElementById('add-to-calendar');
+            const calendarLinks = generateCalendarLink();
+            
+            calendarButton.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Detect if user is on mobile
+                const isMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                    // On mobile, offer both options
+                    if (confirm('Add to calendar? Choose Google Calendar or download for other calendar apps.')) {
+                        window.open(calendarLinks.google, '_blank');
+                    } else {
+                        const link = document.createElement('a');
+                        link.href = calendarLinks.ics;
+                        link.download = 'gvi-charity-event.ics';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    }
+                } else {
+                    // On desktop, open Google Calendar
+                    window.open(calendarLinks.google, '_blank');
+                }
+            });
+        }
+        
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCountdown();
+            setupCalendarButton();
+        });
+    </script>
+</body>
+</html>
